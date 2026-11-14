@@ -73,6 +73,26 @@ export const defaultProfile: UserProfile = {
         }
       ]
     }
+  ],
+  repeatedMistakes: [
+    {
+      id: 'm-1',
+      original: 'I have seen him yesterday',
+      corrected: 'I saw him yesterday',
+      whatWasWrong: 'Used Present Perfect with finished past time indicator (yesterday)',
+      romanHindi: 'Yesterday ke sath Past Simple (V2) lagta hai, have + V3 nahi.',
+      count: 2,
+      lastOccurred: '2026-11-14'
+    },
+    {
+      id: 'm-2',
+      original: 'I am agree with you',
+      corrected: 'I agree with you',
+      whatWasWrong: 'Used "am" before the verb "agree"',
+      romanHindi: '"Agree" khud verb hai, isme "am" nahi lagate.',
+      count: 1,
+      lastOccurred: '2026-11-13'
+    }
   ]
 };
 
@@ -99,6 +119,9 @@ export const storageService = {
         }
         if (typeof parsed.readingPassagesCount !== 'number') {
           parsed.readingPassagesCount = 3;
+        }
+        if (!parsed.repeatedMistakes || !Array.isArray(parsed.repeatedMistakes)) {
+          parsed.repeatedMistakes = defaultProfile.repeatedMistakes || [];
         }
         return parsed;
       }

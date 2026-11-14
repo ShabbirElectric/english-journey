@@ -22,6 +22,7 @@ export const VocabularyBuilder: React.FC = () => {
   const { profile, toggleSaveWord, toggleMasterWord, addXP } = useLearning();
 
   const [activeTab, setActiveTab] = useState<'browse' | 'flashcards' | 'revision'>('browse');
+  const [selectedDay, setSelectedDay] = useState<number | 'all'>(1);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [onlySaved, setOnlySaved] = useState(false);
@@ -38,6 +39,7 @@ export const VocabularyBuilder: React.FC = () => {
 
   // Filter words
   const filteredWords = initialVocabularyBank.filter(word => {
+    const matchesDay = selectedDay === 'all' || word.dayNumber === selectedDay;
     const matchesCategory = selectedCategory === 'All' || word.category === selectedCategory;
     const matchesSaved = !onlySaved || profile.savedWordIds.includes(word.id);
     const matchesSearch =
@@ -45,7 +47,7 @@ export const VocabularyBuilder: React.FC = () => {
       word.simpleMeaning.toLowerCase().includes(searchQuery.toLowerCase()) ||
       word.romanHindiMeaning.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return matchesCategory && matchesSaved && matchesSearch;
+    return matchesDay && matchesCategory && matchesSaved && matchesSearch;
   });
 
   // Flashcards navigation
@@ -69,9 +71,9 @@ export const VocabularyBuilder: React.FC = () => {
     }
   };
 
-  // Revision test setup (pool of 5 words)
-  const testPool = initialVocabularyBank.slice(0, 5);
-  const currentTestWord = testPool[testQuestionIdx];
+  // Revision test setup (pool of 5 words from active filtered set)
+  const testPool = filteredWords.length >= 5 ? filteredWords.slice(0, 5) : initialVocabularyBank.slice(0, 5);
+  const currentTestWord = testPool[testQuestionIdx] || testPool[0];
 
   const handleAnswerTest = (answerIdx: number) => {
     setSelectedTestAnswer(answerIdx);
@@ -179,6 +181,44 @@ export const VocabularyBuilder: React.FC = () => {
       {/* 3. Browse Mode */}
       {activeTab === 'browse' && (
         <div className="space-y-6">
+          {/* Daily 10 Words Sets Selector */}
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-soft-sm space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                Choose Daily 10-Word Lesson Set:
+              </span>
+              <span className="text-[11px] font-bold text-navy-DEFAULT">
+                Showing {filteredWords.length} words
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {[1, 2, 3, 4, 5, 6, 7].map(d => (
+                <button
+                  key={d}
+                  onClick={() => { setSelectedDay(d); setFlashcardIndex(0); }}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    selectedDay === d
+                      ? 'bg-navy-DEFAULT text-white shadow-soft border border-sky-DEFAULT'
+                      : 'bg-surface-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
+                  }`}
+                >
+                  <span>Day {d}</span>
+                  {d === 1 && <span className="text-[10px] px-1.5 py-0.2 rounded bg-sky-DEFAULT text-navy-dark font-extrabold">Today</span>}
+                </button>
+              ))}
+              <button
+                onClick={() => { setSelectedDay('all'); setFlashcardIndex(0); }}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  selectedDay === 'all'
+                    ? 'bg-navy-DEFAULT text-white shadow-soft border border-sky-DEFAULT'
+                    : 'bg-surface-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
+                }`}
+              >
+                All 70 Words
+              </button>
+            </div>
+          </div>
+
           {/* Search & Category Filter Bar */}
           <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-soft-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="relative flex-1 max-w-md">
@@ -192,7 +232,7 @@ export const VocabularyBuilder: React.FC = () => {
               />
             </div>
 
-            <div className="flex flex-wrap items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto max-w-xl">
               <button
                 onClick={() => setSelectedCategory('All')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
@@ -201,13 +241,13 @@ export const VocabularyBuilder: React.FC = () => {
                     : 'bg-surface-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
-                All
+                All Categories
               </button>
-              {vocabularyCategories.slice(0, 4).map((cat) => (
+              {vocabularyCategories.slice(1, 6).map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
                     selectedCategory === cat
                       ? 'bg-navy-DEFAULT text-white shadow-soft'
                       : 'bg-surface-100 text-slate-600 hover:bg-slate-200'

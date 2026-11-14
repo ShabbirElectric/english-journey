@@ -36,7 +36,7 @@ interface DashboardProps {
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
-  const { profile, unlockNextLevel } = useLearning();
+  const { profile, setCurrentLevel, unlockNextLevel } = useLearning();
 
   // Weekly activity chart data
   const weeklyData = [
@@ -117,21 +117,36 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               Learning Difficulty Progression
             </h3>
             <p className="text-xs text-slate-500">
-              You are currently learning at <strong>Medium Level</strong>. Complete daily milestones to unlock Upper Medium and Hard.
+              You are currently learning at <strong>{profile.currentLevel || 'Medium'} Level</strong>. Complete daily milestones or unlock levels to progress.
             </p>
           </div>
-          <span className="text-xs font-bold px-3 py-1 rounded-full bg-sky-light text-navy-dark self-start sm:self-auto">
-            Starting Level: Medium
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold px-3 py-1 rounded-full bg-sky-light text-navy-dark self-start sm:self-auto">
+              Starting Level: Medium
+            </span>
+            {!profile.unlockedLevels.includes('Hard') && (
+              <button
+                onClick={unlockNextLevel}
+                className="text-xs font-bold px-3 py-1 rounded-full bg-navy-DEFAULT text-white hover:bg-navy-dark transition-colors shadow-soft flex items-center gap-1"
+                title="Unlock next level progression"
+              >
+                <Sparkles size={12} className="text-sky-DEFAULT" />
+                <span>Unlock {!profile.unlockedLevels.includes('Upper Medium') ? 'Upper Medium' : 'Hard'}</span>
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {/* Level 1: Medium */}
-          <div className={`p-3.5 rounded-xl border flex items-center justify-between ${
-            profile.currentLevel === 'Medium'
-              ? 'bg-sky-light/40 border-sky-DEFAULT ring-2 ring-sky-DEFAULT/20'
-              : 'bg-surface-100 border-slate-200'
-          }`}>
+          <div
+            onClick={() => setCurrentLevel('Medium')}
+            className={`p-3.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+              profile.currentLevel === 'Medium'
+                ? 'bg-sky-light/40 border-sky-DEFAULT ring-2 ring-sky-DEFAULT/20 shadow-soft-sm'
+                : 'bg-surface-100 border-slate-200 hover:border-sky-DEFAULT'
+            }`}
+          >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-navy-dark text-sky-DEFAULT flex items-center justify-center font-bold text-xs">
                 1
@@ -141,19 +156,34 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 <p className="text-[11px] text-slate-500">Everyday conversations & routines</p>
               </div>
             </div>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-navy-DEFAULT text-white font-bold">
-              Current
-            </span>
+            {profile.currentLevel === 'Medium' ? (
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-navy-DEFAULT text-white font-bold">
+                Active
+              </span>
+            ) : (
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-light text-navy-dark font-semibold">
+                Switch
+              </span>
+            )}
           </div>
 
           {/* Level 2: Upper Medium */}
-          <div className={`p-3.5 rounded-xl border flex items-center justify-between ${
-            profile.currentLevel === 'Upper Medium'
-              ? 'bg-sky-light/40 border-sky-DEFAULT ring-2 ring-sky-DEFAULT/20'
-              : profile.unlockedLevels.includes('Upper Medium')
-              ? 'bg-white border-slate-200'
-              : 'bg-slate-50 border-slate-200 opacity-80'
-          }`}>
+          <div
+            onClick={() => {
+              if (profile.unlockedLevels.includes('Upper Medium')) {
+                setCurrentLevel('Upper Medium');
+              } else {
+                unlockNextLevel();
+              }
+            }}
+            className={`p-3.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+              profile.currentLevel === 'Upper Medium'
+                ? 'bg-sky-light/40 border-sky-DEFAULT ring-2 ring-sky-DEFAULT/20 shadow-soft-sm'
+                : profile.unlockedLevels.includes('Upper Medium')
+                ? 'bg-white border-slate-200 hover:border-sky-DEFAULT'
+                : 'bg-slate-50 border-slate-200 hover:border-sky-DEFAULT/50'
+            }`}
+          >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs">
                 2
@@ -163,25 +193,40 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 <p className="text-[11px] text-slate-500">Opinions, meetings & reasoning</p>
               </div>
             </div>
-            {profile.unlockedLevels.includes('Upper Medium') ? (
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-light text-navy-dark font-bold">
-                Unlocked
+            {profile.currentLevel === 'Upper Medium' ? (
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-navy-DEFAULT text-white font-bold">
+                Active
+              </span>
+            ) : profile.unlockedLevels.includes('Upper Medium') ? (
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-light text-navy-dark font-semibold">
+                Switch
               </span>
             ) : (
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-bold flex items-center gap-1">
-                <Lock size={10} /> Locked
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-bold flex items-center gap-1 hover:bg-sky-light hover:text-navy-dark">
+                <Lock size={10} /> Unlock
               </span>
             )}
           </div>
 
           {/* Level 3: Hard */}
-          <div className={`p-3.5 rounded-xl border flex items-center justify-between ${
-            profile.currentLevel === 'Hard'
-              ? 'bg-sky-light/40 border-sky-DEFAULT ring-2 ring-sky-DEFAULT/20'
-              : profile.unlockedLevels.includes('Hard')
-              ? 'bg-white border-slate-200'
-              : 'bg-slate-50 border-slate-200 opacity-80'
-          }`}>
+          <div
+            onClick={() => {
+              if (profile.unlockedLevels.includes('Hard')) {
+                setCurrentLevel('Hard');
+              } else if (profile.unlockedLevels.includes('Upper Medium')) {
+                unlockNextLevel();
+              }
+            }}
+            className={`p-3.5 rounded-xl border flex items-center justify-between transition-all ${
+              profile.currentLevel === 'Hard'
+                ? 'bg-sky-light/40 border-sky-DEFAULT ring-2 ring-sky-DEFAULT/20 shadow-soft-sm'
+                : profile.unlockedLevels.includes('Hard')
+                ? 'bg-white border-slate-200 hover:border-sky-DEFAULT cursor-pointer'
+                : profile.unlockedLevels.includes('Upper Medium')
+                ? 'bg-slate-50 border-slate-200 hover:border-sky-DEFAULT/50 cursor-pointer'
+                : 'bg-slate-50 border-slate-200 opacity-80 cursor-not-allowed'
+            }`}
+          >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs">
                 3
@@ -191,9 +236,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 <p className="text-[11px] text-slate-500">Advanced discussions & formal nuances</p>
               </div>
             </div>
-            {profile.unlockedLevels.includes('Hard') ? (
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-light text-navy-dark font-bold">
-                Unlocked
+            {profile.currentLevel === 'Hard' ? (
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-navy-DEFAULT text-white font-bold">
+                Active
+              </span>
+            ) : profile.unlockedLevels.includes('Hard') ? (
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-light text-navy-dark font-semibold">
+                Switch
               </span>
             ) : (
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-bold flex items-center gap-1">

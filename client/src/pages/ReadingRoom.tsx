@@ -117,7 +117,7 @@ export const ReadingRoom: React.FC = () => {
             {wordCount} <span className="text-sm font-medium text-sky-light">Words</span>
           </div>
           <span className="text-[11px] text-sky-light mt-1 block font-medium">
-            Medium Difficulty • ~{activePassage.readTimeMins} mins read
+            {activePassage.level} Level • ~{activePassage.readTimeMins} mins read
           </span>
         </div>
       </div>

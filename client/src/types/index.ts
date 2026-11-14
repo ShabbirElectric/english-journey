@@ -69,6 +69,7 @@ export interface DailyVocabWord {
   dailyLifeExample: string;
   practiceSentence: string;
   category?: string;
+  dayNumber?: number;
   synonyms?: string[];
   antonyms?: string[];
 }
@@ -200,6 +201,16 @@ export interface PlacementTestQuestion {
   explanation: string;
 }
 
+export interface RepeatedMistakeItem {
+  id: string;
+  original: string;
+  corrected: string;
+  whatWasWrong?: string;
+  romanHindi: string;
+  count: number;
+  lastOccurred: string;
+}
+
 export interface UserProfile {
   displayName: string;
   email: string;
@@ -219,6 +230,7 @@ export interface UserProfile {
   speakingPracticeCount: number;
   readingPassagesCount: number;
   personalNotes: { id: string; title: string; content: string; date: string }[];
+  repeatedMistakes?: RepeatedMistakeItem[];
   recentAttempts: {
     id: string;
     title: string;

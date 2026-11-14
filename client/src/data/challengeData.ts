@@ -20,7 +20,7 @@ export const thirtyDayChallengeList: ChallengeDay[] = [
       formula: 'I / You / We / They + V1 (routine)\nHe / She / It + V1 + s/es',
       quickExamples: [
         'I wake up around 6:30 AM every weekday.',
-        'My mother usually drinks green tea in the morning.',
+        'My mother usually drinks warm herbal tea in the morning.',
         'I catch the metro at 8:15 AM to reach office on time.'
       ]
     },

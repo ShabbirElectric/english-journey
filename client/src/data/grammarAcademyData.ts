@@ -306,61 +306,183 @@ export const practicalGrammarLessons: GrammarLesson[] = [
     ]
   },
   {
-    id: 'g-prepositions-articles',
+    id: 'g-prepositions',
     part: 3,
     partTitle: 'Daily Practical Grammar',
-    slug: 'prepositions-and-articles',
-    title: 'Prepositions & Articles (In, On, At & A, An, The)',
+    slug: 'prepositions',
+    title: 'Prepositions of Time & Place (At, On, In, To, For, With)',
     level: 'Medium',
     durationMins: 14,
-    simpleExplanation: 'Prepositions connect time and places: At for exact clock time, On for days/dates, In for months/years. Articles: A for consonant sounds, An for vowel sounds (sound, not spelling!).',
-    romanHindiExplanation: 'Time ke liye rules yaad rakhein:\n- AT: Ghadi ka exact time (at 5:00 PM, at night)\n- ON: Din aur tareekh (on Monday, on 15th August)\n- IN: Mahina, saal, subah/shaam (in July, in 2026, in the morning)\nArticles: An tab lagta hai jab aawaz swar (a, e, i, o, u) jaisi nikle (jaise: an honest man, an hour).',
-    formulaOrStructure: 'At 9:00 AM | On Sunday | In the evening\nA book | An apple | An hour (silent h) | The sun (unique)',
+    simpleExplanation: 'Prepositions link time, location, and direction to nouns. Master AT, ON, and IN for both daily clocks and everyday physical places.',
+    romanHindiExplanation: 'Prepositions ka daily use bilkul saral niyam follow karta hai:\n1. Time ke liye:\n- AT: Ghadi ka exact time (at 5:00 PM, at night, at lunchtime)\n- ON: Din aur tareekh (on Monday, on 15th August, on my birthday)\n- IN: Mahina, saal, mausam, subah/shaam (in July, in 2026, in the morning)\n2. Place ke liye:\n- AT: Specific point ya spot (at the bus stop, at the station)\n- ON: Surface ya sadak (on the table, on MG Road)\n- IN: Shahar, kamra, ya enclosed jagah (in Delhi, in the room)',
+    formulaOrStructure: 'Time: At 9:00 AM | On Sunday | In the evening / In 2026\nPlace: At the station | On the desk | In Mumbai',
     examples: [
-      { en: 'The webinar will begin at 4:30 PM on Thursday.', romanHindi: 'Webinar guruwaar ko shaam 4:30 baje shuru hoga.' },
+      { en: 'The client review meeting starts at 4:30 PM on Thursday.', romanHindi: 'Client review meeting guruwaar ko shaam 4:30 baje shuru hoti hai.' },
       { en: 'She was born in Mumbai in 1998.', romanHindi: 'Uska janam 1998 mein Mumbai mein hua tha.' },
-      { en: 'He is an honest police officer.', romanHindi: 'Woh ek imaandar police officer hain.' },
       { en: 'Can you meet me at the cafe on MG Road?', romanHindi: 'Kya tum mujhe MG Road wale cafe par mil sakte ho?' },
-      { en: 'I saw a dog in the park; the dog was playing happily.', romanHindi: 'Maine park mein ek kutta dekha; woh kutta maze se khel raha tha.' }
+      { en: 'I usually go for a walk in the morning.', romanHindi: 'Main aamtaur par subah ke waqt walk par jata hoon.' },
+      { en: 'I am listening to an interesting English podcast.', romanHindi: 'Main ek mazedaar English podcast sun raha hoon.' },
+      { en: 'He has been working for this firm for three years.', romanHindi: 'Woh teen saal se is company ke liye kaam kar raha hai.' },
+      { en: 'Please come with me to the supermarket.', romanHindi: 'Kripya mere sath supermarket chaliye.' }
     ],
     commonMistakes: [
       {
         wrong: 'I will see you on next Monday.',
         correct: 'I will see you next Monday.',
         reason: 'Never use on/at/in before words like "next", "last", or "this".',
-        romanHindiReason: '"Next", "last", ya "this" ke aage on/at nahi lagate.'
+        romanHindiReason: '"Next", "last", ya "this" ke aage on/at nahi lagate. Seedha "see you next Monday" bolein.'
       },
       {
-        wrong: 'He is an European tourist.',
-        correct: 'He is a European tourist.',
-        reason: '"European" starts with a consonant "Y" sound (/jʊərəˈpiːən/), so use "a".',
-        romanHindiReason: 'European ka pehla sound "Y" (vyānjan) hai, isliye "a" lagta hai.'
+        wrong: 'I am listening music.',
+        correct: 'I am listening to music.',
+        reason: 'The verb "listen" requires the preposition "to" before its object.',
+        romanHindiReason: '"Listen" ke baad hamesha "to" lagta hai (listen to music / listen to me).'
       }
     ],
     practiceExercises: [
       {
-        id: 'pe-pa-1',
+        id: 'pe-prep-1',
         type: 'fill_blank',
-        prompt: 'The train arrives ______ 8:15 AM ______ Sunday. (at / on / in)',
+        prompt: 'The train arrives ______ 8:15 AM ______ Sunday.',
         options: ['at, on', 'on, at', 'in, on'],
         correctAnswer: 'at, on',
-        explanation: 'At for time, On for day.',
-        romanHindiTip: 'Time ke liye At, Din ke liye On.'
+        explanation: 'At for exact clock time, On for days of the week.',
+        romanHindiTip: 'Time ke liye At, Din ke liye On lagta hai.'
       }
     ],
     quiz: [
       {
-        id: 'q-pa-1',
+        id: 'q-prep-1',
         question: 'Choose the correct sentence:',
         options: [
-          'He has been waiting for an hour.',
-          'He has been waiting for a hour.',
-          'He has been waiting for the hour in morning.',
-          'He has been wait on hour.'
+          'We will meet at Friday in 6:00 PM.',
+          'We will meet on Friday at 6:00 PM.',
+          'We will meet in Friday on 6:00 PM.',
+          'We will meet at Friday at 6:00 PM.'
         ],
-        correctIndex: 0,
-        explanation: '"Hour" has a silent "h", starting with a vowel sound, taking "an".',
-        romanHindiTip: 'Hour mein "h" silent hota hai, isliye "an hour" aayega.'
+        correctIndex: 1,
+        explanation: '"On Friday" (day) and "at 6:00 PM" (exact clock time).',
+        romanHindiTip: 'Din ke liye On, Ghadi ke time ke liye At.'
+      }
+    ]
+  },
+  {
+    id: 'g-articles',
+    part: 3,
+    partTitle: 'Daily Practical Grammar',
+    slug: 'articles',
+    title: 'Everyday Articles: A, An, The (Vowel Sounds & Definite Specifics)',
+    level: 'Medium',
+    durationMins: 12,
+    simpleExplanation: 'Use "A" before singular consonant sounds, "An" before singular vowel sounds (sound, not spelling!), and "The" when talking about something specific or unique.',
+    romanHindiExplanation: 'Articles mein spelling nahi, sound (aawaz) dekhi jaati hai:\n- A: Jab shuruati aawaz vyānjan (consonant) jaisi ho (a car, a university - "Y" sound, a European - "Y" sound)\n- AN: Jab shuruati aawaz swar (a, e, i, o, u) jaisi ho (an apple, an honest man - silent "h", an hour - silent "h")\n- THE: Jab kisi khaas cheez ki baat ho jise sunne wala pehle se jaanta ho (The book on the table, The sun, The CEO)',
+    formulaOrStructure: 'A + consonant sound (a car, a European)\nAn + vowel sound (an hour, an honest man)\nThe + specific/unique item (the sun, the project)',
+    examples: [
+      { en: 'He is an honest police officer.', romanHindi: 'Woh ek imaandar police officer hain.' },
+      { en: 'I waited at the bus stop for an hour.', romanHindi: 'Maine bus stop par ek ghante tak intezar kiya.' },
+      { en: 'She attends a prestigious university in Delhi.', romanHindi: 'Woh Delhi ki ek nami university mein padhti hai.' },
+      { en: 'Can you pass me the blue file on the table?', romanHindi: 'Kya tum mujhe mez par rakhi hui neeli file de sakte ho?' },
+      { en: 'I saw a dog in the park; the dog was playing happily.', romanHindi: 'Maine park mein ek kutta dekha; woh kutta maze se khel raha tha.' },
+      { en: 'The sun rises in the east.', romanHindi: 'Suraj poorab se nikalta hai.' }
+    ],
+    commonMistakes: [
+      {
+        wrong: 'He is an European tourist.',
+        correct: 'He is a European tourist.',
+        reason: '"European" starts with a consonant "Y" sound (/jʊərəˈpiːən/), so use "a".',
+        romanHindiReason: 'European ka pehla sound "Y" (vyānjan) hai, isliye "a" lagta hai, "an" nahi.'
+      },
+      {
+        wrong: 'She is a honest person.',
+        correct: 'She is an honest person.',
+        reason: 'In "honest", the "h" is silent, so it starts with an "O" vowel sound (/ˈɒn.ɪst/), taking "an".',
+        romanHindiReason: '"Honest" mein "h" silent hota hai, isliye "an honest" bolein.'
+      }
+    ],
+    practiceExercises: [
+      {
+        id: 'pe-art-1',
+        type: 'fill_blank',
+        prompt: 'It took us ______ (a / an) hour to reach the airport.',
+        options: ['an', 'a'],
+        correctAnswer: 'an',
+        explanation: '"Hour" has a silent "h", so use "an".',
+        romanHindiTip: 'Hour mein "h" silent hai, isliye "an" lagta hai.'
+      }
+    ],
+    quiz: [
+      {
+        id: 'q-art-1',
+        question: 'Which sentence uses articles correctly?',
+        options: [
+          'She is an university student and a honest citizen.',
+          'She is a university student and an honest citizen.',
+          'She is a university student and a honest citizen.',
+          'She is an university student and an honest citizen.'
+        ],
+        correctIndex: 1,
+        explanation: '"A university" (consonant Y sound) and "an honest" (vowel O sound).',
+        romanHindiTip: 'University ke liye "a", aur Honest ke liye "an".'
+      }
+    ]
+  },
+  {
+    id: 'g-sentence-formation',
+    part: 4,
+    partTitle: 'Daily Practical Grammar',
+    slug: 'sentence-formation',
+    title: 'Daily Sentence Formation & Asking Questions Naturally',
+    level: 'Medium',
+    durationMins: 14,
+    simpleExplanation: 'English sentences follow strict Subject + Verb + Object (SVO) order. Questions invert the helper verb before the subject ("Do you live...?", "Where did you go?").',
+    romanHindiExplanation: 'English sentence structure ka golden niyam:\n1. Positive Sentence: Subject (kaam karne wala) + Verb (kaam) + Object (jis par kaam hua)\nJaise: "Rahul (S) plays (V) cricket (O)."\n2. Yes/No Question: Helper verb ko aage le aao (Do/Does/Did/Is/Can + Subject + Verb?)\nJaise: "Do you play cricket?" (Kya tum cricket khelte ho?)\n3. WH- Question: WH-word + Helper + Subject + Verb?\nJaise: "Where do you live?" (Tum kahan rehte ho? Never say "Where you live?").',
+    formulaOrStructure: 'Statement: Subject + Verb + Object ("She speaks English")\nYes/No Q: Do/Does/Did/Can + Subject + V1? ("Do you speak English?")\nWH- Question: WH-word + Helper + Subject + V1? ("Where did you buy this?")',
+    examples: [
+      { en: 'Where do you work currently?', romanHindi: 'Tum abhi kahan kaam karte ho?' },
+      { en: 'Why did you leave the office so early yesterday?', romanHindi: 'Kal tum office se itni jaldi kyun nikal gaye the?' },
+      { en: 'How often do you practice speaking English?', romanHindi: 'Tum kitni baar English bolne ki practice karte ho?' },
+      { en: 'Do you want to grab lunch together today?', romanHindi: 'Kya tum aaj sath mein lunch karna chahte ho?' },
+      { en: 'What time does the morning train depart?', romanHindi: 'Subah ki train kitne baje nikalti hai?' },
+      { en: 'She always carries an umbrella in her backpack.', romanHindi: 'Woh hamesha apne backpack mein chhaata rakhti hai.' }
+    ],
+    commonMistakes: [
+      {
+        wrong: 'Where you are going?',
+        correct: 'Where are you going?',
+        reason: 'In questions, the helper verb (are) must come BEFORE the subject (you).',
+        romanHindiReason: 'Sawaal poochhte waqt helper verb (are) subject (you) se pehle aayega.'
+      },
+      {
+        wrong: 'Why he didn\'t call me?',
+        correct: 'Why didn\'t he call me?',
+        reason: 'Helper verb "didn\'t" must precede the subject "he" in questions.',
+        romanHindiReason: 'Sawaal mein "Why didn\'t he call" sahi structure hai.'
+      }
+    ],
+    practiceExercises: [
+      {
+        id: 'pe-sf-1',
+        type: 'fill_blank',
+        prompt: '______ (Where do you live? / Where you live?)',
+        options: ['Where do you live?', 'Where you live?'],
+        correctAnswer: 'Where do you live?',
+        explanation: 'Questions require helper verb "do" before subject "you".',
+        romanHindiTip: 'Sawaal mein "do" subject se pehle aayega.'
+      }
+    ],
+    quiz: [
+      {
+        id: 'q-sf-1',
+        question: 'Which question is properly constructed in natural English?',
+        options: [
+          'What did you bought at the market?',
+          'What did you buy at the market?',
+          'What you bought at the market?',
+          'What do you bought at the market?'
+        ],
+        correctIndex: 1,
+        explanation: 'Did + subject + base verb (buy).',
+        romanHindiTip: '"Did" ke baad hamesha verb ka pehla form "buy" aayega.'
       }
     ]
   },

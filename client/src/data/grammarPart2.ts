@@ -13,7 +13,7 @@ export const grammarPart2Lessons: GrammarLesson[] = [
     formulaOrStructure: 'Positive: Subject + V1 (+ s/es for he/she/it) + Object\nNegative: Subject + do/does + not + V1 + Object\nQuestion: Do/Does + Subject + V1 + Object + ?',
     hindiExplanation: 'वर्तमान अनिश्चित काल (Present Simple) का प्रयोग दैनिक दिनचर्या, आदत और सार्वभौमिक सत्य (Universal facts) के लिए होता है। पहचान: वाक्य के अंत में "ता है, ती है, ते हैं" आता है। He/She/It/Singular के साथ क्रिया में s/es लगता है।',
     examples: [
-      { en: 'She drinks green tea every morning before going for a jog.', hi: 'वह सुबह जॉगिंग पर जाने से पहले हर दिन ग्रीन टी पीती है।' },
+      { en: 'She drinks herbal tea every morning before going for a jog.', hi: 'वह सुबह जॉगिंग पर जाने से पहले हर दिन हर्बल टी पीती है।' },
       { en: 'The sun rises in the east and provides light to the entire earth.', hi: 'सूर्य पूर्व में उगता है और पूरी पृथ्वी को प्रकाश प्रदान करता है।' },
       { en: 'My parents live in a quiet countryside town near Pune.', hi: 'मेरे माता-पिता पुणे के पास एक शांत ग्रामीण शहर में रहते हैं।' },
       { en: 'Does your brother work for a multinational software company?', hi: 'क्या आपका भाई किसी बहुराष्ट्रीय सॉफ्टवेयर कंपनी में काम करता है?' },
@@ -79,7 +79,7 @@ export const grammarPart2Lessons: GrammarLesson[] = [
       { en: 'I am currently preparing for my civil services examination.', hi: 'मैं वर्तमान में अपनी सिविल सेवा परीक्षा की तैयारी कर रहा हूँ।' },
       { en: 'She is working on an important quarterly marketing report.', hi: 'वह एक महत्वपूर्ण त्रैमासिक विपणन रिपोर्ट पर काम कर रही है।' },
       { en: 'Why are they arguing about such a trivial matter?', hi: 'वे इतने मामूली मुद्दे पर क्यों बहस कर रहे हैं?' },
-      { en: 'Global temperatures are rising due to greenhouse emissions.', hi: 'ग्रीनहाउस उत्सर्जन के कारण वैश्विक तापमान बढ़ रहा है।' }
+      { en: 'Global temperatures are rising due to carbon emissions.', hi: 'कार्बन उत्सर्जन के कारण वैश्विक तापमान बढ़ रहा है।' }
     ],
     commonMistakes: [
       {

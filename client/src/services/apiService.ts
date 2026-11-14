@@ -114,39 +114,91 @@ export const apiService = {
       return await res.json();
     } catch (error) {
       console.warn('Writing eval API failed, generating local assessment:', error);
+      const sentences = text
+        .split(/(?<=[.?!])\s+/)
+        .map(s => s.trim())
+        .filter(s => s.length > 0);
+
       const wordCount = text.trim().split(/\s+/).length;
+
+      // Smart sentence analysis
+      const corrections = sentences.slice(0, 5).map((sentence, idx) => {
+        let whatWasWrong = 'Grammatically clear and communicative.';
+        let romanHindiExplanation = 'Yeh sentence bilkul sahi hai aur daily baatcheet mein naturally use hota hai.';
+        let corrected = sentence;
+        let naturalAlternative = sentence;
+
+        if (/\bi\s+have\s+seen\s+.*yesterday\b/i.test(sentence) || /\bi\s+have\s+(saw|bought|went)\s+yesterday\b/i.test(sentence)) {
+          corrected = sentence.replace(/\bi\s+have\s+seen\b/gi, 'I saw').replace(/\bi\s+have\s+bought\b/gi, 'I bought').replace(/\bi\s+have\s+went\b/gi, 'I went');
+          whatWasWrong = 'Used Present Perfect (have + V3) with a finished past time word (yesterday).';
+          romanHindiExplanation = 'Jab specific past time (jaise yesterday, last week) bataya jaye, tab Past Simple (V2) lagta hai, Present Perfect nahi.';
+          naturalAlternative = corrected;
+        } else if (/\bi\s+am\s+agree\b/i.test(sentence)) {
+          corrected = sentence.replace(/\bi\s+am\s+agree\b/gi, 'I agree');
+          whatWasWrong = 'Placed "am" before the active verb "agree".';
+          romanHindiExplanation = '"Agree" khud ek verb hai. English mein "I agree" ya "I don\'t agree" bolte hain, "I am agree" nahi.';
+          naturalAlternative = sentence.replace(/\bi\s+am\s+agree\b/gi, 'I completely agree');
+        } else if (/\b(he|she)\s+don'?t\b/i.test(sentence)) {
+          corrected = sentence.replace(/\b(he|she)\s+don'?t\b/gi, '$1 doesn\'t');
+          whatWasWrong = 'Used "don\'t" instead of "doesn\'t" for third-person singular.';
+          romanHindiExplanation = 'He / She / It ke sath negative mein "doesn\'t" lagta hai, "don\'t" nahi.';
+          naturalAlternative = corrected;
+        } else if (/\bpeoples\b/i.test(sentence)) {
+          corrected = sentence.replace(/\bpeoples\b/gi, 'people');
+          whatWasWrong = 'Added plural -s to "people", which is already plural.';
+          romanHindiExplanation = '"People" pehle se hi plural hai, isme alag se "s" nahi judta.';
+          naturalAlternative = corrected;
+        } else if (/\bdiscuss\s+about\b/i.test(sentence)) {
+          corrected = sentence.replace(/\bdiscuss\s+about\b/gi, 'discuss');
+          whatWasWrong = 'Added unnecessary preposition "about" after "discuss".';
+          romanHindiExplanation = '"Discuss" ka matlab hi hota hai kisi bare mein baat karna; iske baad "about" nahi lagate.';
+          naturalAlternative = corrected;
+        } else {
+          // Provide an enriching natural phrasing
+          naturalAlternative = sentence.replace(/\bvery good\b/gi, 'fantastic')
+                                       .replace(/\bvery busy\b/gi, 'packed with tasks')
+                                       .replace(/\breally happy\b/gi, 'thrilled')
+                                       .replace(/\bi woke up\b/gi, 'I woke up and started my morning');
+        }
+
+        return {
+          original: sentence,
+          corrected,
+          whatWasWrong,
+          romanHindiExplanation,
+          naturalAlternative: naturalAlternative !== sentence ? naturalAlternative : `Naturally: "${sentence}"`
+        };
+      });
+
       return {
-        overallScore: wordCount >= 25 ? 8.5 : 7.0,
+        overallScore: wordCount >= 25 ? 8.8 : 7.5,
         estimatedLevel: targetLevel,
         wordCount,
-        writingCorrections: [
-          {
-            original: text.slice(0, Math.min(text.length, 50)),
-            corrected: text.slice(0, Math.min(text.length, 50)),
-            whatWasWrong: 'Grammatically clear and communicative.',
-            romanHindiExplanation: 'Aapka sentence samajh aa raha hai aur daily routine ke liye accha hai.',
-            naturalAlternative: `Naturally: "${text.trim()}"`
-          }
-        ],
+        writingCorrections: corrections,
         vocabularySuggestions: [
           {
             originalWord: 'good',
-            betterAlternative: 'pretty good / productive / enjoyable',
-            context: 'In daily conversations, saying "I had a pretty good day" sounds natural and confident.'
+            betterAlternative: 'pretty good / productive / rewarding',
+            context: 'In daily conversation, saying "I had a pretty good day" or "a productive morning" sounds natural.'
+          },
+          {
+            originalWord: 'busy',
+            betterAlternative: 'packed / occupied / tied up',
+            context: 'Instead of repetitive "busy", use "My schedule was packed with tasks" or "I was tied up in meetings".'
           }
         ],
         strengths: [
-          'Clear daily-use English sentence flow',
-          'Good message clarity that people easily understand',
-          'Practical vocabulary suited for everyday situations'
+          'Communicates everyday thoughts clearly and naturally',
+          'Good use of daily chronological flow and routine words',
+          'Appropriate Medium-level conversational tone'
         ],
         areasForImprovement: [
-          'Try connecting thoughts with words like "because", "although", or "instead"',
-          'Practice reading your sentence out loud to check natural rhythm'
+          'Connect sentences smoothly using words like "because", "although", "instead", or "so"',
+          'Pay close attention to past tense verbs when narrating yesterday\'s events'
         ],
-        structureFeedback: 'Great daily writing practice! Writing 5-10 everyday sentences builds strong subconscious fluency.',
+        structureFeedback: 'Great job practicing daily writing! Your sentences express your real-life experiences clearly. Review Coach Sarah\'s sentence-by-sentence Roman Hindi explanations below to polish your natural flow.',
         modelAnswer: text,
-        source: 'offline_engine'
+        source: 'smart_client_engine'
       };
     }
   }

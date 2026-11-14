@@ -18,7 +18,7 @@ import { apiService, WritingEvaluationResponse } from '../services/apiService';
 import { useLearning } from '../context/LearningContext';
 
 export const WritingStudio: React.FC = () => {
-  const { profile, saveWritingSubmission, unlockBadge } = useLearning();
+  const { profile, saveWritingSubmission, unlockBadge, recordMistake } = useLearning();
 
   const [selectedPromptId, setSelectedPromptId] = useState(writingPromptsList[0].id);
   const activePrompt = writingPromptsList.find(p => p.id === selectedPromptId) || writingPromptsList[0];
@@ -51,6 +51,18 @@ export const WritingStudio: React.FC = () => {
       );
 
       setEvaluationResult(result);
+      if (result.writingCorrections && result.writingCorrections.length > 0) {
+        result.writingCorrections.forEach(c => {
+          if (c.original !== c.corrected && c.whatWasWrong && !c.whatWasWrong.includes('sound') && !c.whatWasWrong.includes('clear')) {
+            recordMistake({
+              original: c.original,
+              corrected: c.corrected,
+              whatWasWrong: c.whatWasWrong,
+              romanHindi: c.romanHindiExplanation
+            });
+          }
+        });
+      }
       saveWritingSubmission({
         promptTitle: activePrompt.title,
         genre: activePrompt.genre,

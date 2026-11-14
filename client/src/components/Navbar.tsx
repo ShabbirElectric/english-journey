@@ -30,7 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 English <span className="text-sky-DEFAULT">Journey</span>
               </span>
               <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-sky-light text-navy-dark rounded-full">
-                Medium Level
+                {profile.currentLevel || 'Medium'} Level
               </span>
             </div>
             <p className="text-[11px] text-slate-500 font-medium hidden md:block">

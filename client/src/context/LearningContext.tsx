@@ -26,6 +26,8 @@ interface LearningContextType {
   }) => void;
   addPersonalNote: (title: string, content: string) => void;
   deletePersonalNote: (id: string) => void;
+  recordMistake: (mistake: { original: string; corrected: string; whatWasWrong?: string; romanHindi: string }) => void;
+  clearMistake: (id: string) => void;
   unlockBadge: (badgeCode: string) => void;
   setCefrLevel: (level: any) => void;
   triggerConfetti: () => void;
@@ -227,6 +229,44 @@ export const LearningProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     notify('Note deleted');
   };
 
+  const recordMistake = (mistake: { original: string; corrected: string; whatWasWrong?: string; romanHindi: string }) => {
+    setProfile(prev => {
+      const existing = prev.repeatedMistakes || [];
+      const idx = existing.findIndex(m => m.original.toLowerCase() === mistake.original.toLowerCase());
+      let updated;
+      if (idx >= 0) {
+        updated = [...existing];
+        updated[idx] = {
+          ...updated[idx],
+          count: updated[idx].count + 1,
+          lastOccurred: new Date().toISOString().split('T')[0]
+        };
+      } else {
+        updated = [
+          {
+            id: `mistake-${Date.now()}`,
+            original: mistake.original,
+            corrected: mistake.corrected,
+            whatWasWrong: mistake.whatWasWrong,
+            romanHindi: mistake.romanHindi,
+            count: 1,
+            lastOccurred: new Date().toISOString().split('T')[0]
+          },
+          ...existing
+        ].slice(0, 15);
+      }
+      return { ...prev, repeatedMistakes: updated };
+    });
+  };
+
+  const clearMistake = (id: string) => {
+    setProfile(prev => ({
+      ...prev,
+      repeatedMistakes: (prev.repeatedMistakes || []).filter(m => m.id !== id)
+    }));
+    notify('Mistake marked as resolved! Keep it up!');
+  };
+
   const unlockBadge = (badgeCode: string) => {
     setProfile(prev => {
       if (prev.unlockedBadges.includes(badgeCode)) return prev;
@@ -275,6 +315,8 @@ export const LearningProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         saveWritingSubmission,
         addPersonalNote,
         deletePersonalNote,
+        recordMistake,
+        clearMistake,
         unlockBadge,
         setCefrLevel,
         triggerConfetti,

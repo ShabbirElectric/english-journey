@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F4F8FC;
+    color: #142D4E;
+  }
+}
+
+/* Custom subtle navy/blue scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E8F1F9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B6DDFF;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #69B7F7;
+}
+
+/* Smooth card transitions */
+.transition-card {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.transition-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -6px rgba(11, 31, 58, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+}
